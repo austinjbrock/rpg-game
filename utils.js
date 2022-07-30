@@ -3,6 +3,20 @@ function getDiceRollArray(diceCount) {
 	return Math.floor(Math.random() * 6) + 1  
 	})
 	return newDiceRolls;
-	}
+}
 
-export {getDiceRollArray}
+
+function getDicePlaceHolderHtml(diceCount) {
+	let placeHolderDice= new Array(diceCount).fill().map(function(){
+	return `<div class="placeholder-dice"></div>`
+	})
+	return( placeHolderDice)
+}
+
+
+
+
+
+
+
+export {getDiceRollArray,getDicePlaceHolderHtml}
