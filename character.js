@@ -13,7 +13,7 @@ function Character(data){
          }).join('')}
    
       this.getCharacterHtml = function(){
-         const {elementId, name,avatar,health,diceCount} = this;
+         const {elementId, name,avatar,health,diceCount,diceArray} = this;
          const diceHtml = this.getDiceHtml(diceCount)
          
          return `
@@ -22,7 +22,7 @@ function Character(data){
          <img class="avatar" src="${avatar}"/>
          <p class="health">health: <b> ${health} </b></p>
          <div class="dice-container">
-         ${this.diceArray} </div>
+         ${diceArray} </div>
          </div>   
          `
          }	
