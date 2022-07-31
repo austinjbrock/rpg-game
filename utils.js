@@ -7,10 +7,9 @@ function getDiceRollArray(diceCount) {
 
 
 function getDicePlaceHolderHtml(diceCount) {
-	let placeHolderDice= new Array(diceCount).fill().map(function(){
-	return `<div class="placeholder-dice"></div>`
-	})
-	return( placeHolderDice)
+		return new Array(diceCount).fill(3).map(function(){
+			return `<div class="placeholder-dice">${getDiceRollArray}</div>`
+	}).join(' ')
 }
 
 
