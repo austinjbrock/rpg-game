@@ -1,7 +1,12 @@
-import {getDiceRollArray} from "./utils.js";
+import {getDicePlaceHolderHtml, getDiceRollArray} from "./utils.js";
 
 function Character(data){
       Object.assign(this,data)
+
+      this.diceArray = getDicePlaceHolderHtml(this.diceCount)
+
+
+
       this.getDiceHtml = function(diceCount){
          return getDiceRollArray(diceCount).map(function(num){
          return `<div class="dice">${num}</div>`
@@ -17,7 +22,7 @@ function Character(data){
          <img class="avatar" src="${avatar}"/>
          <p class="health">health: <b> ${health} </b></p>
          <div class="dice-container">
-         ${diceHtml} </div>
+         ${this.diceArray} </div>
          </div>   
          `
          }	
