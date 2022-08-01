@@ -4,21 +4,15 @@ const characterData = {
 		avatar: 'images/wizard.png',
 		health: 60,
 		diceCount : 3,
+		currentDiceScore: [],
   },
 	monster:{
 			 name: 'Orc',
 			 avatar: 'images/orc.png',
-			 health: 60,
+			 health: 100,
 			 diceCount: 1,
   },
-  
-	knightInArmor:{
-	  elementId: 'knight',
-	  name: 'Lancelot',
-	  avatar: 'images/knight.png',
-	  health: 80,
-	  diceCount: 2,
-  }
+
   
 }
 
