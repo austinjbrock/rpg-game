@@ -16,6 +16,4 @@ function getDicePlaceHolderHtml(diceCount) {
 
 
 
-
-
 export {getDiceRollArray,getDicePlaceHolderHtml}

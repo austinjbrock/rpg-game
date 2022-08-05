@@ -24,24 +24,17 @@ function endGame(){
 	const endEmoji = wizard.health > 0 ? '🔮': '☠️'
 	
 document.body.innerHTML = 
-	`<div class="end-game">
-	<h2>Game Over</h2>
-	<h3>${endMessage}</h3>
-	<p class="end-emoji">${endEmoji}</p>
-	</div>
-	`
+`<div class="end-game">
+        <h2>Game Over</h2>
+        <h3>${endMessage}</h3>
+        <p class="end-emoji">${endEmoji}</p>
+    </div>
+	 `
 }
 
 
-// const message = playerGuess < correctAnswer ? 'Too low!' : playerGuess > correctAnswer ? 'Too high!' : 'Exactly right!'
-
-// console.log(message)
-
 
  document.getElementById('attack-button').addEventListener('click',attack)
-
-
-
 
 const render = function(){
 	document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
