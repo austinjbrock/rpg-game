@@ -1,53 +1,77 @@
-import characterData from "./data.js";
-import {getDiceRollArray, getDicePlaceHolderHtml} from "./utils.js";
-import { Character } from "./character.js";
-	
+import characterData from './data.js'
+import Character from './Character.js'
 
-function attack(){
-	orc.getDiceHtml()
-	wizard.getDiceHtml()
-	
-	wizard.takeDamage(orc.currentDiceScore)
-	orc.takeDamage(wizard.currentDiceScore)
-	render()
-	if(wizard.dead || orc.dead){
-		endGame()
+let monstersArray = ["orc", "demon", "goblin"]
+let  isWaiting = false;
+
+
+function getNewMonster() {
+    const nextMonsterData = characterData[monstersArray.shift()]
+    return nextMonsterData ? new Character(nextMonsterData) : {}
+}
+
+
+
+function attack() {
+    wizard.setDiceHtml()
+    monster.setDiceHtml()
+    wizard.takeDamage(monster.currentDiceScore)
+    monster.takeDamage(wizard.currentDiceScore)
+    render()
+   
+
+	 	if(!isWaiting){
+
+			if(wizard.dead){
+				endGame()
+		  }
+		  else if(monster.dead){
+				if(monstersArray.length > 0){
+					setTimeout(()=>{
+					 monster = getNewMonster()
+					 render()
+						isWaiting == false
+					}
+					 ,1000)
+				}
+				else{
+					endGame()
+				}
+		  }
+		
+
+		 }
+
 	}
-}
 
-function endGame(){
+function endGame() {
+	isWaiting = true;
+   
+	const endMessage = wizard.health === 0 && monster.health === 0 ?
+        "No victors - all creatures are dead" :
+        wizard.health > 0 ? "The Wizard Wins" :
+            "The Monster is Victorious"
+
+    const endEmoji = wizard.health > 0 ? "🔮" : "☠️"
+    setTimeout(()=>{
+		document.body.innerHTML = `
+		<div class="end-game">
+			 <h2>Game Over</h2> 
+			 <h3>${endMessage}</h3>
+			 <p class="end-emoji">${endEmoji}</p>
+		</div>
+		`
+	 },1500)
 	
-	const endMessage = wizard.health === 0 && orc.health === 0 ? 'No victors - all Players are dead':
-	wizard.health > 0 ? 'Wizard Wins' : 'The Orc is Victorious'
-
-
-	const endEmoji = wizard.health > 0 ? '🔮': '☠️'
-	
-document.body.innerHTML = 
-`<div class="end-game">
-        <h2>Game Over</h2>
-        <h3>${endMessage}</h3>
-        <p class="end-emoji">${endEmoji}</p>
-    </div>
-	 `
 }
 
+document.getElementById("attack-button").addEventListener('click', attack)
 
-
- document.getElementById('attack-button').addEventListener('click',attack)
-
-const render = function(){
-	document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
- 	document.getElementById('monster').innerHTML = orc.getCharacterHtml()
-
+function render() {
+    document.getElementById('hero').innerHTML = wizard.getCharacterHtml()
+    document.getElementById('monster').innerHTML = monster.getCharacterHtml()
 }
+
 const wizard = new Character(characterData.hero)
-const orc = new Character(characterData.monster)
-
+let monster = getNewMonster()
 render()
-
-
-
-
-
-
