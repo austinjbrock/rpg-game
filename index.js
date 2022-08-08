@@ -13,55 +13,50 @@ function getNewMonster() {
 
 
 function attack() {
-    wizard.setDiceHtml()
-    monster.setDiceHtml()
-    wizard.takeDamage(monster.currentDiceScore)
-    monster.takeDamage(wizard.currentDiceScore)
-    render()
-   
+wizard.setDiceHtml()
+monster.setDiceHtml()
+wizard.takeDamage(monster.currentDiceScore)
+monster.takeDamage(wizard.currentDiceScore)
+render()
 
-	 	if(!isWaiting){
+if(!isWaiting){
+	if(wizard.dead){
+	endGame()
+}
+	else if(monster.dead){
+	if(monstersArray.length > 0){
+	setTimeout(()=>{
+	monster = getNewMonster()
+	render()
+	isWaiting == false
+	},1000)
+}
+else{
+	endGame()
+}
+}
+}
 
-			if(wizard.dead){
-				endGame()
-		  }
-		  else if(monster.dead){
-				if(monstersArray.length > 0){
-					setTimeout(()=>{
-					 monster = getNewMonster()
-					 render()
-						isWaiting == false
-					}
-					 ,1000)
-				}
-				else{
-					endGame()
-				}
-		  }
-		
-
-		 }
-
-	}
+}
 
 function endGame() {
-	isWaiting = true;
-   
-	const endMessage = wizard.health === 0 && monster.health === 0 ?
-        "No victors - all creatures are dead" :
-        wizard.health > 0 ? "The Wizard Wins" :
-            "The Monster is Victorious"
+isWaiting = true;
 
-    const endEmoji = wizard.health > 0 ? "🔮" : "☠️"
-    setTimeout(()=>{
-		document.body.innerHTML = `
-		<div class="end-game">
-			 <h2>Game Over</h2> 
-			 <h3>${endMessage}</h3>
-			 <p class="end-emoji">${endEmoji}</p>
-		</div>
-		`
-	 },1500)
+const endMessage = wizard.health === 0 && monster.health === 0 ?
+		"No victors - all creatures are dead" :
+		wizard.health > 0 ? "The Wizard Wins" :
+			"The Monster is Victorious"
+
+	const endEmoji = wizard.health > 0 ? "🔮" : "☠️"
+	setTimeout(()=>{
+	document.body.innerHTML = `
+	<div class="end-game">
+			<h2>Game Over</h2> 
+			<h3>${endMessage}</h3>
+			<p class="end-emoji">${endEmoji}</p>
+	</div>
+	`
+	},1500)
 	
 }
 
